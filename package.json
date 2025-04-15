@@ -1,0 +1,7 @@
+{
+  "name": "interview-template",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ]
+}
