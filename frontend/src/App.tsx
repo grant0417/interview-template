@@ -1,35 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, use } from "react";
+
+const fetchEmojis = async () => {
+  const res = await fetch("http://localhost:8080/api/v1/emojis");
+  if (!res.ok) throw new Error("Failed to fetch emojis");
+  return res.json();
+};
+
+const emojisPromise = fetchEmojis();
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+  const emojis = use(emojisPromise);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="bg-white rounded-lg shadow-md p-8 max-w-md w-full mx-4">
+        <div className="text-center space-y-6">
+          <h1 className="text-2xl font-bold">Hello World</h1>
+          <button
+            onClick={() => setCount((count) => count + 1)}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 shadow-sm"
+          >
+            count is {count}
+          </button>
+          <div className="flex flex-wrap gap-2 justify-center">
+            {emojis.map((emoji: string) => (
+              <div key={emoji} className="text-4xl">
+                {emoji}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;

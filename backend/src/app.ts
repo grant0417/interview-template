@@ -16,9 +16,9 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-app.get<{}, MessageResponse>('/', (req, res) => {
+app.get<{}, MessageResponse>('/', (_req, res) => {
   res.json({
-    message: '🦄🌈✨👋🌎🌍🌏✨🌈🦄',
+    message: 'Hello, World!',
   });
 });
 
